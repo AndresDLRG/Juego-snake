@@ -76,8 +76,8 @@ window.onload = function(){
 		switch(actual.dir){
 			case "up":
 						if(actual.posY > 0){
-							vib = new player(actual.posX, actual.posY - 20);
-							i--;
+								vib = new player(actual.posX, actual.posY - 20);
+								i--;
 							}
 						else{
 							actual.choque  = true;
@@ -85,24 +85,24 @@ window.onload = function(){
 						break;
 			case "left":
 						if(actual.posX > 0){
-							vib = new player(actual.posX - 20, actual.posY);
-							j--;
+								vib = new player(actual.posX - 20, actual.posY);
+								j--;
 							}
 						else
 							actual.choque  = true;
 						break;
 			case "down":
 						if(actual.posY < cHeight - 20){
-							vib = new player(actual.posX, actual.posY + 20);
-							i++;
+								vib = new player(actual.posX, actual.posY + 20);
+								i++;
 							}
 						else
 							actual.choque  = true;
 						break;
 			case "right":
 						if(actual.posX < cWidth - 20){
-							vib = new player(actual.posX + 20, actual.posY);
-							j++;
+								vib = new player(actual.posX + 20, actual.posY);
+								j++;
 							}
 						else
 							actual.choque  = true;
@@ -111,12 +111,14 @@ window.onload = function(){
 		}
 		vib.dir = actual.dir;
 		serp.push(vib);
-		if(escenario[serp[serp.length - 1].posX / 20][serp[serp.length - 1].posY / 20] == 1)
-			serp[serp.length - 1].choque = true;
-		else if(escenario[serp[serp.length - 1].posX / 20][serp[serp.length - 1].posY / 20] == 2) {
+		
+		serp[serp.length - 1].choque = (escenario[serp[serp.length - 1].posX / 20][serp[serp.length - 1].posY / 20] == 1) ? true : false;
+		
+		if(serp[serp.length - 1].choque && (escenario[serp[serp.length - 1].posX / 20][serp[serp.length - 1].posY / 20] == 2)) {
 			nuevo = true;
 			drawComida();
 		}
+		
 		if(serp[serp.length - 1].choque === false){
 			ctx.fillStyle = color;
 			ctx.fillRect(serp[serp.length - 1].posX, serp[serp.length - 1].posY, 20 , 20);
@@ -127,21 +129,22 @@ window.onload = function(){
 	function drawComida(){
 		var x,y;
 		do{
-		x = Math.floor(Math.random() * 25);
-		y = Math.floor(Math.random() * 20);
-		}while(escenario[x][y] != 0);
-		escenario[x][y] = 2;
-		var comi  = new comida(x * 20,y * 20);
-		ctx.fillStyle = "yellow";
-		ctx.fillRect(comi.posX, comi.posY, 20 , 20);
-		
-		puntos += 10;
-		if (puntos > best) {
-			localStorage.setItem("best",puntos);
-			best = puntos;
+			x = Math.floor(Math.random() * 25);
+			y = Math.floor(Math.random() * 20);
+			}while(escenario[x][y] != 0);
+			escenario[x][y] = 2;
+			var comi  = new comida(x * 20,y * 20);
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(comi.posX, comi.posY, 20 , 20);
+			
+			puntos += 10;
+			if (puntos > best) {
+				localStorage.setItem("best",puntos);
+				best = puntos;
 		}
 		pPuntos.innerHTML = "Puntos: " + puntos;
 		pRecord.innerHTML = "Record: " + best;
+		
 		if(tiempo > 400)
 			tiempo -= 40;
 		else if(tiempo > 300)
